@@ -14,18 +14,25 @@ end entity;
 
 architecture RegisterBankAlg of RegisterBank is
 
-type Registers is array( 0 to 31 ) of std_logic_vector( 31 downto 0 );
+type Registers is array( 31 downto 0 ) of std_logic_vector( 31 downto 0 );
 signal bank: Registers;
 
 begin
-	process( reg1, reg2, writeReg, writeData )
+	process( RegWrite )
 
 	begin
 		if( RegWrite = '1' )then
 			bank( conv_integer( writeReg ) ) <= writeData;
 		end if;
+	end process;
 
+	process( reg1 )
+	begin
 		data1 <= bank( conv_integer( reg1 ) );
+	end process;
+
+	process( reg2 )
+	begin
 		data2 <= bank( conv_integer( reg2 ) );
 	end process;
 end architecture;
