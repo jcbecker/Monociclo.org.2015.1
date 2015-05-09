@@ -3,6 +3,7 @@ USE ieee.std_logic_1164.all;
 USE ieee.std_logic_unsigned.all;
 USE ieee.std_logic_arith.all;
 
+--somador tanto para ALU quanto para PC + 4.
 entity Sum is
 	port(
 		clk: in std_logic;
