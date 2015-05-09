@@ -1,6 +1,7 @@
 library ieee;
 USE ieee.std_logic_1164.all;
 USE ieee.std_logic_arith.all;
+USE ieee.std_logic_unsigned.all;
 
 entity TB_Mux5Bit is
 end TB_Mux5Bit;
@@ -19,7 +20,7 @@ architecture TB_Mux5BitAlg of TB_Mux5Bit is
 	signal ins20_16, ins15_11, wr: std_logic_vector( 4 downto 0 );
 begin
 	
-	Test: Mux5Bit port map(sel,ins20_16,ins15_11,wr);
+	TBMux5: Mux5Bit port map(sel,ins20_16,ins15_11,wr);
 
 	process
 
@@ -27,17 +28,16 @@ begin
 		ins20_16 <= "11111";
 		ins15_11 <= "00000";
 
-		wait for 10 ns;
-			sel <= '0';
-		wait for 1 ns;
+		sel <= '0';
+		wait for 2 ns;
 
 		assert( wr = "11111" ) report "Resposta errada linha 34." severity error;
 
-		wait for 10 ns;
-			sel <= '1';
-		wait for 1 ns;
+		sel <= '1';
+		wait for 2 ns;
+
 
 		assert( wr = "00000" ) report "Resposta errada linha 40." severity error;		
 	end process;
 
-end TB_Mux5BitAlg;
+end architecture;

@@ -1,5 +1,6 @@
 library ieee;
 USE ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
 USE ieee.std_logic_arith.all;
 
 entity TB_Mux32Bit is
@@ -19,23 +20,22 @@ architecture TB_Mux32BitALg of TB_Mux32Bit is
 	signal e1, e2, ans: std_logic_vector( 31 downto 0 );
 begin
 
-	Test: Mux32Bit port map( sel, e1, e2, ans ); 
+	TBMux32: Mux32Bit port map( sel, e1, e2, ans ); 
 	process
 
 	begin
 		e1 <= "11111111111111111111111111111111";
 		e2 <= "00000000000000000000000000000000";
 
-		wait for 10 ns;
-			sel <= '0';
-		wait for 1 ns;
+		sel <= '0';
+		wait for 2 ns;
 
-		assert( ans = e1 ) report "Resposta errada na linha 33." severity error;
+		assert( ans = "11111111111111111111111111111111" ) report "Resposta errada na linha 33." severity error;
 
-		wait for 10 ns;
-			sel <= '1';
-		wait for 1 ns;
+		wait for 2 ns;
+		sel <= '1';
+		wait for 2 ns;
 
-		assert( ans = e2 ) report "Resposta errada na linha 39." severity error;
+		assert( ans = "00000000000000000000000000000000" ) report "Resposta errada na linha 39." severity error;
 	end process;
-end TB_Mux32BitAlg;
+end architecture;

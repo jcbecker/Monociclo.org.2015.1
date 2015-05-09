@@ -1,5 +1,6 @@
 library ieee;
 USE ieee.std_logic_1164.all;
+USE ieee.std_logic_unsigned.all;
 USE ieee.std_logic_arith.all;
 
 --Este mux vai ser utilizado em varios pontos da arquitetura.
@@ -15,7 +16,7 @@ architecture Mux32BitAlg of Mux32Bit is
 
 begin
 
-	process( a, b, s )
+	process( s )
 
 	begin
 		if( s = '0' )then
@@ -24,4 +25,4 @@ begin
 			o <= b;
 		end if;
 	end process;
-end Mux32BitAlg;
+end architecture;
