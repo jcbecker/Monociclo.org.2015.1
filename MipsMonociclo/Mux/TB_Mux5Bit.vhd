@@ -28,13 +28,13 @@ begin
 		sel <= '0';
 		wait for 4 ns;
 
-		assert( wr = "11111" ) report "Resposta errada linha 34." severity error;
+		assert( wr = "11111" ) report "Resposta errada linha 31." severity error;
 
 		wait for 2 ns;
 		sel <= '1';
 		wait for 4 ns;
 
-		assert( wr = "00000" ) report "Resposta errada linha 40." severity error;		
+		assert( wr = "00000" ) report "Resposta errada linha 37." severity error;		
 	end process;
 
 end architecture;
