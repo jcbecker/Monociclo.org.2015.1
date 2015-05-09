@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 use ieee.std_logic_unsigned.all;
 
-entity ULA is
+entity ALU is
 	port(
 		op: in std_logic_vector( 2 downto 0 );
 		a, b: in std_logic_vector( 31 downto 0 );
@@ -12,7 +12,7 @@ entity ULA is
 	);
 end entity;
 
-architecture ULAlg of ULA is
+architecture ALUAlg of ALU is
 
 begin
 
