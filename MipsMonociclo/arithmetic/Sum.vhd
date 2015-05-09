@@ -6,7 +6,6 @@ USE ieee.std_logic_arith.all;
 --somador tanto para ALU quanto para PC + 4.
 entity Sum is
 	port(
-		clk: in std_logic;
 		a, b: in std_logic_vector( 31 downto 0 );
 		o: out std_logic_vector( 31 downto 0 )
 	);
@@ -15,12 +14,5 @@ end entity;
 architecture SumAlg of Sum is
 
 begin
-
-	process(clk)
-
-	begin
-		if( clk'event and clk = '1' ) then
-			o <= a + b;
-		end if;
-	end process;	
+	o <= a + b;
 end architecture;
