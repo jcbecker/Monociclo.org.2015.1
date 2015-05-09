@@ -31,13 +31,13 @@ begin
 			sel <= '0';
 		wait for 1 ns;
 
-		assert( wr = "11111" ) report "Resposta errada linha 32." severity error;
+		assert( wr = "11111" ) report "Resposta errada linha 34." severity error;
 
 		wait for 10 ns;
 			sel <= '1';
 		wait for 1 ns;
 
-		assert( wr = "00000" ) report "Resposta errada linha 38." severity error;		
+		assert( wr = "00000" ) report "Resposta errada linha 40." severity error;		
 	end process;
 
 end TB_Mux5BitAlg;
