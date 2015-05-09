@@ -19,23 +19,20 @@ architecture TB_Mux5BitAlg of TB_Mux5Bit is
 	signal sel: std_logic;
 	signal ins20_16, ins15_11, wr: std_logic_vector( 4 downto 0 );
 begin
-	
 	TBMux5: Mux5Bit port map(sel,ins20_16,ins15_11,wr);
-
 	process
-
 	begin
+		wait for 2 ns;
 		ins20_16 <= "11111";
 		ins15_11 <= "00000";
-
 		sel <= '0';
-		wait for 2 ns;
+		wait for 4 ns;
 
 		assert( wr = "11111" ) report "Resposta errada linha 34." severity error;
 
-		sel <= '1';
 		wait for 2 ns;
-
+		sel <= '1';
+		wait for 4 ns;
 
 		assert( wr = "00000" ) report "Resposta errada linha 40." severity error;		
 	end process;
