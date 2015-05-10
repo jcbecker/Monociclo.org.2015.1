@@ -16,7 +16,7 @@ architecture ALUAlg of ALU is
 
 begin
 
-	process(a,b)
+	process(op,a,b)
 
 	begin
 		if( op = "000" )then
@@ -25,9 +25,9 @@ begin
 			result <= a or b;
 		elsif( op = "010" )then
 			result <= a + b;
-		elsif( op = "010" )then
+		elsif( op = "110" )then
 			result <= a - b;
-		elsif( op = "010" )then
+		elsif( op = "111" )then
 			if( a < b )then
 				result <= "00000000000000000000000000000001";
 			else 
