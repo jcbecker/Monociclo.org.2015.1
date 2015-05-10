@@ -16,7 +16,7 @@ architecture Mux32BitAlg of Mux32Bit is
 
 begin
 
-	process( s )
+	process( s, a, b )
 
 	begin
 		if( s = '0' )then

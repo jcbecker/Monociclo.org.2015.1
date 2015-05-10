@@ -16,7 +16,7 @@ end Mux5Bit;
 architecture Mux5BitALg of Mux5Bit is
 
 begin
-	process( s )
+	process( s, a20_16, b15_11 )
 
 	begin 
 		if( s = '0' ) then
