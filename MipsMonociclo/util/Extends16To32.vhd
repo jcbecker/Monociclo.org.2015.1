@@ -13,5 +13,5 @@ end entity;
 architecture Extends16To32Alg of Extends16To32 is
 
 begin
-	o <= e & "0000000000000000";
+	o <= "0000000000000000" & e;
 end architecture;
