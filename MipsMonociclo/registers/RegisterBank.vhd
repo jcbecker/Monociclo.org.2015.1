@@ -21,18 +21,26 @@ begin
 	process( RegWrite )
 
 	begin
-		if( RegWrite = '1' )then
+		if( RegWrite = '1' and writeReg /= "00000" )then
 			bank( conv_integer( writeReg ) ) <= writeData;
 		end if;
 	end process;
 
 	process( reg1 )
 	begin
-		data1 <= bank( conv_integer( reg1 ) );
+	   if( reg1 = "00000" )then
+	      data1 <= "00000000000000000000000000000000";
+	   else
+   		   data1 <= bank( conv_integer( reg1 ) );
+  		end if;
 	end process;
 
 	process( reg2 )
 	begin
-		data2 <= bank( conv_integer( reg2 ) );
+       if( reg2 = "00000" )then
+        data2 <= "00000000000000000000000000000000";     
+       else 
+      		data2 <= bank( conv_integer( reg2 ) );
+       end if;
 	end process;
 end architecture;
