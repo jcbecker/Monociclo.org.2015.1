@@ -18,13 +18,8 @@ type Registers is array( 31 downto 0 ) of std_logic_vector( 31 downto 0 );
 signal bank: Registers;
 
 begin
-	process( RegWrite )
 
-	begin
-		if( RegWrite = '1' and writeReg /= "00000" )then
-			bank( conv_integer( writeReg ) ) <= writeData;
-		end if;
-	end process;
+   bank( conv_integer( writeReg ) ) <= writeData when( RegWrite = '1' and writeReg /= "00000" );
 
 	process( reg1 )
 	begin
