@@ -93,10 +93,6 @@ begin
        assert( oTB = "00000000000000000000000000000100" ) report "Erro TB memoria de dados teste 4." severity error;
        memReadTB <= '0';
        wait for 2 ns;
-       
-       
-       
-       
-       
+              
     end process;   
 end architecture;

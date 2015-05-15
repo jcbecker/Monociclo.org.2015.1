@@ -18,24 +18,23 @@ type Registers is array( 31 downto 0 ) of std_logic_vector( 31 downto 0 );
 signal bank: Registers;
 
 begin
-
-   bank( conv_integer( writeReg ) ) <= writeData when( RegWrite = '1' and writeReg /= "00000" );
+	bank( conv_integer( writeReg ) ) <= writeData when( RegWrite = '1' and writeReg /= "00000" );
 
 	process( reg1 )
 	begin
-	   if( reg1 = "00000" )then
-	      data1 <= "00000000000000000000000000000000";
-	   else
-   		   data1 <= bank( conv_integer( reg1 ) );
-  		end if;
+		if( reg1 = "00000" )then
+			data1 <= "00000000000000000000000000000000";
+		else
+			data1 <= bank( conv_integer( reg1 ) );
+ 		end if;
 	end process;
 
 	process( reg2 )
 	begin
-       if( reg2 = "00000" )then
-        data2 <= "00000000000000000000000000000000";     
-       else 
-      		data2 <= bank( conv_integer( reg2 ) );
-       end if;
+		if( reg2 = "00000" )then
+			data2 <= "00000000000000000000000000000000";     
+		else 
+			data2 <= bank( conv_integer( reg2 ) );
+		end if;
 	end process;
 end architecture;
