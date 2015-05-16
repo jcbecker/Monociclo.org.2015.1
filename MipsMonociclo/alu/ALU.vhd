@@ -13,32 +13,35 @@ entity ALU is
 end entity;
 
 architecture ALUAlg of ALU is
-
+	signal res: std_logic_vector (31 downto 0);
 begin
 
 	process(op,a,b)
 
 	begin
 		if( op = "000" )then
-			result <= a and b;
+			res <= a and b;
 		elsif( op = "001" )then
-			result <= a or b;
+			res <= a or b;
 		elsif( op = "010" )then
-			result <= a + b;
+			res <= a + b;
 		elsif( op = "110" )then
-			result <= a - b;
+			res <= a - b;
 		elsif( op = "111" )then
 			if( a < b )then
-				result <= "00000000000000000000000000000001";
+				res <= "00000000000000000000000000000001";
 			else 
-				result <= "00000000000000000000000000000000";
+				res <= "00000000000000000000000000000000";
 			end if;
 		end if;
-
-		if( a = b )then
-			zero <= '1';
-		else
-			zero <= '0';
-		end if;
+--
+--		if( a = b )then
+--			zero <= '1';
+--		else
+--			zero <= '0';
+--		end if;
 	end process;
+	zero <= '1' when res = x"00000000"
+	else '0';
+	result <= res;
 end architecture; 
