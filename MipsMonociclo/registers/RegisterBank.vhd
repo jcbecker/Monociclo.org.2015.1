@@ -19,22 +19,11 @@ signal bank: Registers;
 
 begin
 	bank( conv_integer( writeReg ) ) <= writeData when( RegWrite = '1' and writeReg /= "00000" );
+	
+	data1 <= "00000000000000000000000000000000" when reg1 = "00000"
+	else  bank( conv_integer( reg1 ) );
+	
+	data2 <= "00000000000000000000000000000000" when reg2 = "00000"
+	else bank( conv_integer( reg2 ) );
 
-	process( reg1 )
-	begin
-		if( reg1 = "00000" )then
-			data1 <= "00000000000000000000000000000000";
-		else
-			data1 <= bank( conv_integer( reg1 ) );
- 		end if;
-	end process;
-
-	process( reg2 )
-	begin
-		if( reg2 = "00000" )then
-			data2 <= "00000000000000000000000000000000";     
-		else 
-			data2 <= bank( conv_integer( reg2 ) );
-		end if;
-	end process;
 end architecture;
