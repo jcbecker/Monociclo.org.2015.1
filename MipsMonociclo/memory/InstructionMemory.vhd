@@ -15,11 +15,13 @@ architecture InsAlg of InstructionMemory is
    signal instruction: Inst;   
 
 begin
-   
-        o( 7 downto 0 ) <= instruction( conv_integer( e ) );
-        o( 15 downto 8 ) <= instruction( conv_integer( e )+1 );
-        o( 23 downto 16 ) <= instruction( conv_integer( e )+2 );
-	o( 31 downto 24 ) <= instruction( conv_integer( e )+3 );
+   	process(e)
+	begin
+       		o( 7 downto 0 ) <= instruction( conv_integer( e ) );
+        	o( 15 downto 8 ) <= instruction( conv_integer( e )+1 );
+        	o( 23 downto 16 ) <= instruction( conv_integer( e )+2 );
+		o( 31 downto 24 ) <= instruction( conv_integer( e )+3 );
+	end process;
 
 	process( writeInst )
 	begin
