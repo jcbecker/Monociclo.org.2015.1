@@ -4,7 +4,7 @@ use ieee.std_logic_arith.all;
 
 entity MIPS is
 	port(
-		clkPC: in std_logic;
+		clkPC, reset: in std_logic;
 		writeInst, inst: in std_logic_vector( 31 downto 0 )
 	);
 end entity;
@@ -50,7 +50,7 @@ architecture Arch of MIPS is
 
 	component PC is
 		port(
-			clk: in std_logic;
+			clk, reset: in std_logic;
 			q: in std_logic_vector( 31 downto 0 );
 			d: out std_logic_vector( 31 downto 0 )
 		);
@@ -114,7 +114,7 @@ architecture Arch of MIPS is
 	signal data1, data2, writeData, result, instMemO, pcE, pcO, offset, secOP, readData, nextInst, beqInst4, beqInst: std_logic_vector( 31 downto 0 );
 	
 begin
-	PCTB: PC port map( clkPC, pcE, pcO);
+	PCTB: PC port map( clkPC, reset, pcE, pcO);
 	InstMemTB: InstructionMemory port map( writeInst, pcO, inst, instMemo);
 	ControlTB: Control port map( instMemo( 31 downto 26 ), RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, ALUOp);
 	writeRegTB: Mux5Bit port map( RegDst, instMemo( 20 downto 16 ), instMemo( 15 downto 11 ), writeReg );

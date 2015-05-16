@@ -26,6 +26,6 @@ begin
 		instruction( conv_integer( writeInst ) ) <= newInst( 7 downto 0 );
 		instruction( conv_integer( writeInst )+1 ) <= newInst( 15 downto 8 );
 		instruction( conv_integer( writeInst )+2 ) <= newInst( 23 downto 16 );
-		instruction( conv_integer( writeInst )+2 ) <= newInst( 31 downto 24 );
+		instruction( conv_integer( writeInst )+3 ) <= newInst( 31 downto 24 );
 	end process;	
 end architecture;
