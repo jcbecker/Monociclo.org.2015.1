@@ -3,6 +3,10 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
 
 entity MIPS is
+	port(
+		clkPC: in std_logic;
+		writeInst, inst: in std_logic_vector( 31 downto 0 )
+	);
 end entity;
 
 architecture Arch of MIPS is
@@ -39,7 +43,7 @@ architecture Arch of MIPS is
 
 	component InstructionMemory is
 		port(
-			e: in std_logic_vector( 31 downto 0 );
+			writeInst, e, newInst: in std_logic_vector( 31 downto 0 );
 			o: out std_logic_vector( 31 downto 0 )
 		);
 	end component;
@@ -106,12 +110,12 @@ architecture Arch of MIPS is
 	signal op: std_logic_vector( 2 downto 0 );
 	signal ALUOp: std_logic_vector( 1 downto 0 );
 	signal writeReg: std_logic_vector( 4 downto 0 );
-	signal clkPC, zero, RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, PCSrc: std_logic;
+	signal zero, RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, PCSrc: std_logic;
 	signal data1, data2, writeData, result, instMemO, pcE, pcO, offset, secOP, readData, nextInst, beqInst4, beqInst: std_logic_vector( 31 downto 0 );
 	
 begin
 	PCTB: PC port map( clkPC, pcE, pcO);
-	InstMemTB: InstructionMemory port map( pcO, instMemo);
+	InstMemTB: InstructionMemory port map( writeInst, pcO, inst, instMemo);
 	ControlTB: Control port map( instMemo( 31 downto 26 ), RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, ALUOp);
 	writeRegTB: Mux5Bit port map( RegDst, instMemo( 20 downto 16 ), instMemo( 15 downto 11 ), writeReg );
 	RegBankTB: RegisterBank port map( RegWrite, instMemo( 25 downto 21 ), instMemo( 20 downto 16 ), writeReg, writeData, data1, data2 );
@@ -126,8 +130,4 @@ begin
 	BeqSumTB: Sum port map( nextInst, beqInst4, beqInst );
 	PCSrc <= Branch and zero;
 	NextInstTB2: Mux32Bit port map( PCSrc, nextInst, beqInst, pcE );
-	process
-	begin
-		wait for 2 ns;
-	end process;
 end architecture;
