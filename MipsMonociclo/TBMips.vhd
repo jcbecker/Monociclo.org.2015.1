@@ -21,18 +21,33 @@ begin
 
 	process
 	begin
+		--resetando registrador pc.
 		reset <= '0';
 		wait for 2 ns;
 		reset <= '1';
-		writeInst <= "00000000000000000000000000000000";
+
+		--OP: add $1, $0, $0
+		writeInst <= "00000000000000000000000000000000";--instrucao de endereco 0.
 		inst <= "00000000000000000000100000000000";
 		wait for 2 ns;
 		
-		writeInst <= "00000000000000000000000000000100";
+		--OP: sw $1, $1
+		writeInst <= "00000000000000000000000000000100";--instrucao de endereco 4.
 		inst <= "10101100001000010000000000000000";
 		wait for 2 ns;
 
+		--OP: lw $2, $1
+		writeInst <= "00000000000000000000000000001000";--instrucao de endereco 8.
+		inst <= "10001100001000100000000000000000";
+		wait for 2 ns;
+
 		reset <= '0';
+
+		clkPC <= '0';
+		wait for 2 ns;
+		clkPC <= '1';
+		wait for 5 ns;
+
 		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
