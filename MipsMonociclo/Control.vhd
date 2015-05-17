@@ -66,7 +66,18 @@ begin
 			Branch <= '0';
 			ALUOP <= "00"; 
 			Jump <= '1';
-			
+		elsif (cod = "001000") then --addi
+			RegDst <= '0';
+			ALUSrc <= '1';
+			MemtoReg <= '0';
+			RegWrite <= '1';
+			MemRead <= '0';
+			MemWrite <= '0';
+			Branch <= '0';
+			ALUOP <= "00"; 
+			Jump <= '0';
+
+
 		end if;		
 	end process;
 end architecture;
