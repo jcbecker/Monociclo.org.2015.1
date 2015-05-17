@@ -18,7 +18,7 @@ begin
 
 	begin
 		if( AluOp = "00" )then
-			operation <= "010";
+			operation <= "010";--addi lw sw
 		elsif( AluOp = "01" )then
 			operation <= "110";
 		else
