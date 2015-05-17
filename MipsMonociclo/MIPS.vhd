@@ -130,7 +130,7 @@ begin
 	SLTB: ShiftLeft2 port map( offset, beqInst4 );
 	BeqSumTB: Sum port map( nextInst, beqInst4, beqInst );
 	PCSrc <= Branch and zero;
-	jumpaddress <= nextInst (31 downto 28) & instMemo(25 downto 0)& "00";-- a concatenacao a direita e equivalente a shift esquerda e mul 4
+	jumpaddress <= nextInst(31 downto 28) & instMemo(25 downto 0) & "00";-- a concatenacao a direita e equivalente a shift esquerda e mul 4
 	NextInstTB2: Mux32Bit port map( PCSrc, nextInst, beqInst, PCmuxout );
 	JumpMux: Mux32bit port map (Jump, PCmuxout, jumpaddress, pcE);
 end architecture;
