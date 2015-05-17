@@ -46,12 +46,22 @@ begin
 		inst <= "00100000001000010000000000000110";
 		wait for 2 ns;
 
-		--OP: J  00000000000000000000001000
+		--OP: bne $1, $2, 0000000000000000 
 		writeInst <= "00000000000000000000000000010000";--instrucao de endereco 16.
+		inst <= "00010100001000100000000000000000";
+		wait for 2 ns;
+
+		--OP: J  00000000000000000000001000
+		writeInst <= "00000000000000000000000000010100";--instrucao de endereco 20.
 		inst <= "00001000000000000000000000001000";
 		wait for 2 ns;
 
 		reset <= '0';
+
+		clkPC <= '0';
+		wait for 2 ns;
+		clkPC <= '1';
+		wait for 2 ns;
 
 		clkPC <= '0';
 		wait for 2 ns;
