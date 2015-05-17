@@ -1,7 +1,6 @@
 library ieee;
 USE ieee.std_logic_1164.all;
-USE ieee.std_logic_unsigned.all;
-USE ieee.std_logic_arith.all;
+use ieee.numeric_std.all;
 
 entity Extends16To32 is
 	port(
@@ -13,5 +12,5 @@ end entity;
 architecture Extends16To32Alg of Extends16To32 is
 
 begin
-	o <= "0000000000000000" & e;
+	o <= std_logic_vector(resize( signed(e), 32 ) );
 end architecture;
