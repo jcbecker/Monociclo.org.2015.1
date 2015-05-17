@@ -18,7 +18,7 @@ type Registers is array( 31 downto 0 ) of std_logic_vector( 31 downto 0 );
 signal bank: Registers;
 
 begin
-	process( RegWrite, writeReg, writeData )
+	process( RegWrite, writeReg, writeData, reg1, reg2 )
 
 	begin
 		if( RegWrite = '1' and writeReg /= "00000" )then
