@@ -76,6 +76,16 @@ begin
 			Branch <= '0';
 			ALUOP <= "00"; 
 			Jump <= '0';
+		elsif (cod = "001100") then --slti
+			RegDst <= '0';
+			ALUSrc <= '1';
+			MemtoReg <= '0';
+			RegWrite <= '1';
+			MemRead <= '0';
+			MemWrite <= '0';
+			Branch <= '0';
+			ALUOP <= "10"; 
+			Jump <= '0';
 
 
 		end if;		
