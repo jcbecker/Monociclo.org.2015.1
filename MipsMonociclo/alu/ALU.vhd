@@ -34,14 +34,11 @@ begin
 				res <= "00000000000000000000000000000000";
 			end if;
 		end if;
---
---		if( a = b )then
---			zero <= '1';
---		else
---			zero <= '0';
---		end if;
-	end process;
-	zero <= '1' when res = x"00000000"
-	else '0';
+		if( a = b )then
+			zero <= '1';
+		else
+			zero <= '0';
+		end if;
+	end process;	
 	result <= res;
 end architecture; 
