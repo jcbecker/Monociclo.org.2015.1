@@ -86,8 +86,6 @@ begin
 			Branch <= '0';
 			ALUOP <= "10"; 
 			Jump <= '0';
-
-
 		end if;		
 	end process;
 end architecture;
