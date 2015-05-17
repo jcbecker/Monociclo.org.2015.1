@@ -59,7 +59,7 @@ architecture Arch of MIPS is
 	component Control is
 		port(
 			cod: in std_logic_vector( 5 downto 0 );
-			RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, Jump, BNE: out std_logic;
+			RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, Jump, BNE, JAL: out std_logic;
 			ALUOP: out std_logic_vector( 1 downto 0 )
 		);
 	end component;	
@@ -109,17 +109,17 @@ architecture Arch of MIPS is
 
 	signal op: std_logic_vector( 2 downto 0 );
 	signal ALUOp: std_logic_vector( 1 downto 0 );
-	signal writeReg: std_logic_vector( 4 downto 0 );
-	signal zero, RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, PCSrc, Jump, BNE: std_logic;
+	signal writeReg, OutJalMux: std_logic_vector( 4 downto 0 );
+	signal zero, RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, PCSrc, Jump, BNE, JAL: std_logic;
 	signal data1, data2, writeData, result, instMemO, pcE, pcO, offset, secOP, readData, nextInst, beqInst4, beqInst: std_logic_vector( 31 downto 0 );
-	signal jumpaddress, PCmuxout: std_logic_vector( 31 downto 0 );
+	signal jumpaddress, PCmuxout, OutJalMux2: std_logic_vector( 31 downto 0 );
 	
 begin
 	PCTB: PC port map( clkPC, reset, pcE, pcO);
 	InstMemTB: InstructionMemory port map( writeInst, pcO, inst, instMemo);
-	ControlTB: Control port map( instMemo( 31 downto 26 ), RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, Jump, BNE, ALUOp);
+	ControlTB: Control port map( instMemo( 31 downto 26 ), RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, Jump, BNE, JAL, ALUOp);
 	writeRegTB: Mux5Bit port map( RegDst, instMemo( 20 downto 16 ), instMemo( 15 downto 11 ), writeReg );
-	RegBankTB: RegisterBank port map( RegWrite, instMemo( 25 downto 21 ), instMemo( 20 downto 16 ), writeReg, writeData, data1, data2 );
+	RegBankTB: RegisterBank port map( RegWrite, instMemo( 25 downto 21 ), instMemo( 20 downto 16 ), OutJalMux, OutJalMux2, data1, data2 );
 	SignExTB: Extends16To32 port map( instMemo( 15 downto 0 ), offset );
 	AluCtrlTB: AluControl port map( ALUOp, instMemo( 5 downto 0 ), op );
 	MuxSegOP: Mux32Bit port map( ALUSrc, data2, offset, secOP );
@@ -132,5 +132,7 @@ begin
 	PCSrc <= (Branch and zero) or (BNE and (not zero));
 	jumpaddress <= nextInst (31 downto 28) & instMemo(25 downto 0)& "00";-- a concatenacao a direita e equivalente a shift esquerda e mul 4
 	NextInstTB2: Mux32Bit port map( PCSrc, nextInst, beqInst, PCmuxout );
-	JumpMux: Mux32bit port map (Jump, PCmuxout, jumpaddress, pcE);
+	JumpMux: Mux32Bit port map (Jump, PCmuxout, jumpaddress, pcE);
+	WregJal: Mux5Bit port map (JAL, WriteReg, "11111", OutJalMux);
+	WriteDataMuxJal: Mux32Bit port map (JAL, writeData, nextInst,OutJalMux2 );
 end architecture;
