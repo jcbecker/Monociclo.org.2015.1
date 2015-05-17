@@ -41,18 +41,27 @@ begin
 		inst <= "10001100001000100000000000000000";
 		wait for 2 ns;
 
+		--OP: J  00000000000000000000001000
+		writeInst <= "00000000000000000000000000001100";
+		inst <= "00001000000000000000000000001000";
+		wait for 2 ns;
+
 		reset <= '0';
 
 		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
-		wait for 5 ns;
+		wait for 2 ns;
 
 		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
-		wait for 5 ns;
+		wait for 2 ns;
 
+		clkPC <= '0';
+		wait for 2 ns;
+		clkPC <= '1';
+		wait for 2 ns;
 	end process;
 end architecture;
 
