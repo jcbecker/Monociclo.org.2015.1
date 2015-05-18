@@ -54,9 +54,9 @@ begin
 		inst <= "00010100001000011111111111111011";
 		wait for 2 ns;
 
-		--OP: J  11111111111111111111111100
+		--OP: J  00000000000000000000000011
 		writeInst <= "00000000000000000000000000010100";--instrucao de endereco 20.
-		inst <= "00001011111111111111111111111100";
+		inst <= "00001000000000000000000000000011";
 		wait for 2 ns;
 
 		reset <= '0';
@@ -81,6 +81,12 @@ begin
 		clkPC <= '1';
 		wait for 2 ns;
 
+		clkPC <= '0';
+		wait for 2 ns;
+		clkPC <= '1';
+		wait for 2 ns;
+
+		--Precisamos de um clock a mais para o funcionamento do Jump.
 		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
