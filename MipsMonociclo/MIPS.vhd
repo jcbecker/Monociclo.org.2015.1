@@ -66,7 +66,7 @@ architecture Arch of MIPS is
 
 	component RegisterBank is
 		port(
-			RegWrite: in std_logic;
+			clkPC, RegWrite: in std_logic;
 			reg1, reg2, writeReg: in std_logic_vector( 4 downto 0 );
 			writeData: in std_logic_vector( 31 downto 0 );
 			data1, data2: out std_logic_vector( 31 downto 0 )
@@ -120,7 +120,7 @@ begin
 	InstMemTB: InstructionMemory port map( writeInst, pcO, inst, instMemo);
 	ControlTB: Control port map( instMemo( 31 downto 26 ), RegDst, Branch, MemRead, MemtoReg, MemWrite, ALUSrc, RegWrite, Jump, BNE, JAL, ALUOp);
 	writeRegTB: Mux5Bit port map( RegDst, instMemo( 20 downto 16 ), instMemo( 15 downto 11 ), writeReg );
-	RegBankTB: RegisterBank port map( RegWrite, ReadReg1, instMemo( 20 downto 16 ), OutJalMux, OutJalMux2, data1, data2 );
+	RegBankTB: RegisterBank port map( clkPC, RegWrite, ReadReg1, instMemo( 20 downto 16 ), OutJalMux, OutJalMux2, data1, data2 );
 	SignExTB: Extends16To32 port map( instMemo( 15 downto 0 ), offset );
 	AluCtrlTB: AluControl port map( ALUOp, instMemo( 5 downto 0 ), JR, op );
 	MuxSegOP: Mux32Bit port map( ALUSrc, data2, offset, secOP );
