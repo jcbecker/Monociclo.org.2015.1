@@ -48,9 +48,22 @@ begin
 		--writeInst <= "00000000000000000000000000010000";
 		--wait for 1 ns;
 
-		--OP: sub $2, $0, $1
-		inst <= "00000000000000010001000000100010";
+		--OP: sub $2, $0, $0
+ 		--ja fiz testes melhores, esse aqui e para testar o slti
+		--pois as funcoes slt/slti nao funcionam para numeros 
+		--negativos. Ver: MIPS_ISA.
 		writeInst <= "00000000000000000000000000010000";
+		inst <= "00000000000000000000000000100010";
+		wait for 1 ns;
+
+		--OP: slt $3, $2, $1
+		writeInst <= "00000000000000000000000000010100";
+		inst <= "00000000010000010001100000011010";
+		wait for 1 ns;
+
+		--OP: slti $4, $1, 7         
+		writeInst <= "00000000000000000000000000011000";
+		inst <= "00101000001001000000000000000111";
 		wait for 1 ns;
 
 		--OP: beq $0, $2, 1111111111111011 funciona.
@@ -64,7 +77,7 @@ begin
 
 		--OP: J  00000000000000000000000011 se o bne estiver descomentado o jump 
 		--				nao vai executar porque o BNE vai desviar.
-		writeInst <= "00000000000000000000000000010100"; --instrucao de endereco 20.
+		writeInst <= "00000000000000000000000000011100"; --instrucao de endereco 20.
 		inst <= "00001000000000000000000000000011";
 		wait for 1 ns; --14 ns.
 
