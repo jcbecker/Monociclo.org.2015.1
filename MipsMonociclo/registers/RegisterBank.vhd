@@ -18,19 +18,19 @@ type Registers is array( 31 downto 0 ) of std_logic_vector( 31 downto 0 );
 signal bank: Registers;
 
 begin
-	process( RegWrite, writeData, writeReg )
+	process( clkPC, RegWrite, writeData, writeReg )
 	variable idxWR: integer;
 	begin
 		idxWR := conv_integer( writeReg );
 
-		if( RegWrite = '1' and writeReg /= "00000" )then
+		if( clkPC'event and clkPC = '1' and RegWrite = '1' and writeReg /= "00000" )then
 			bank( idxWR ) <= writeData;
 		end if;
 	end process;	
 
 	process( reg1, clkPC )
 	begin
-		if( clkPC'event and clkPC = '1' ) then	
+		if( clkPC'event and clkPC = '0' ) then	
 			if( reg1 = "00000" ) then
 				data1 <= "00000000000000000000000000000000";
 			else
@@ -41,7 +41,7 @@ begin
 
 	process( reg2, clkPC )
 	begin
-		if( clkPC'event and clkPC = '1' ) then	
+		if( clkPC'event and clkPC = '0' ) then	
 			if( reg2 = "00000" ) then
 				data2 <= "00000000000000000000000000000000";
 			else
