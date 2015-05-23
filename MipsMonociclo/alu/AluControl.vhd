@@ -18,31 +18,24 @@ begin
 	process( AluOp, funct )
 
 	begin
+		JR <= '0';
 		if( AluOp = "00" )then
 			operation <= "010";--soma para fazer addi lw sw
-			JR <= '0';
 		elsif( AluOp = "01" )then
 			operation <= "110";--sub para fazer beq e bne
-			JR <= '0';
 		elsif (AluOp = "10" )then
 			operation <= "111";--slti
-			JR <= '0';
 		else
 			if( funct( 3 downto 0 ) = "0000" )then
 				operation <= "010";
-				JR <= '0';
 			elsif( funct( 3 downto 0 ) = "0010" )then
 				operation <= "110";
-				JR <= '0';
 			elsif( funct( 3 downto 0 ) = "0100" )then
 				operation <= "000";
-				JR <= '0';
 			elsif( funct( 3 downto 0 ) = "0101" )then
 				operation <= "001";
-				JR <= '0';
 			elsif( funct( 3 downto 0 ) = "1010" )then
 				operation <= "111";
-				JR <= '0';
 			elsif( funct( 3 downto 0 ) = "1000" )then --JR
 				JR <= '1';
 			end if;
