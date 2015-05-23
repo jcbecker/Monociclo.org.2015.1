@@ -42,17 +42,29 @@ begin
 		writeInst <= "00000000000000000000000000001100";--instrucao de endereco 12.
 		inst <= "00100000001000010000000000000110";
 		wait for 1 ns;
+		
+		--OP: and $3, $1, $2
+		--inst <= "00000000010000010001100000100100";
+		--writeInst <= "00000000000000000000000000010000";
+		--wait for 1 ns;
 
-		--OP: beq $0, $2, 1111111111111011 
-		--inst <= "00010000000000101111111111111011";
-
-		--OP: bne $1, $2, 1111111111111011 
-		writeInst <= "00000000000000000000000000010000";--instrucao de endereco 16.
-		inst <= "00010100001000101111111111111011";
+		--OP: sub $2, $0, $1
+		inst <= "00000000000000010001000000100010";
+		writeInst <= "00000000000000000000000000010000";
 		wait for 1 ns;
 
-		--OP: J  00000000000000000000000011 nao vai executar porque o BNE vai desviar.
-		writeInst <= "00000000000000000000000000010100";--instrucao de endereco 20.
+		--OP: beq $0, $2, 1111111111111011 funciona.
+		--inst <= "00010000000000101111111111111011";
+		--writeInst <= "00000000000000000000000000010000";
+
+		--OP: bne $1, $2, 1111111111111011 funciona.
+		--writeInst <= "00000000000000000000000000010000";--instrucao de endereco 16.
+		--inst <= "00010100001000101111111111111011";
+		--wait for 1 ns;
+
+		--OP: J  00000000000000000000000011 se o bne estiver descomentado o jump 
+		--				nao vai executar porque o BNE vai desviar.
+		writeInst <= "00000000000000000000000000010100"; --instrucao de endereco 20.
 		inst <= "00001000000000000000000000000011";
 		wait for 1 ns; --14 ns.
 
