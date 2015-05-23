@@ -10,7 +10,7 @@ architecture MachineCode of TBMips is
 	component MIPS is
 		port(
 			clkPC, reset: in std_logic;
-			writeInst, inst: in std_logic_vector( 31 downto 0 )
+			newInstAddress, newInst: in std_logic_vector( 31 downto 0 )
 		);
 	end component;
 
@@ -21,75 +21,74 @@ begin
 
 	process
 	begin
-		--resetando registrador pc.
 		reset <= '0';
-		wait for 2 ns;
-		reset <= '1';
 
 		--OP: add $1, $0, $0
 		writeInst <= "00000000000000000000000000000000";--instrucao de endereco 0.
 		inst <= "00000000000000000000100000000000";
-		wait for 2 ns;
+		wait for 1 ns;
 		
 		--OP: sw $1, $1
 		writeInst <= "00000000000000000000000000000100";--instrucao de endereco 4.
 		inst <= "10101100001000010000000000000000";
-		wait for 2 ns;
+		wait for 1 ns;
 
 		--OP: lw $2, $1
 		writeInst <= "00000000000000000000000000001000";--instrucao de endereco 8.
 		inst <= "10001100001000100000000000000000";
-		wait for 2 ns;
+		wait for 1 ns;
 
 		--OP: addi $1, $1, 6
 		writeInst <= "00000000000000000000000000001100";--instrucao de endereco 12.
 		inst <= "00100000001000010000000000000110";
-		wait for 2 ns;
+		wait for 1 ns;
 
 		--OP: beq $0, $2, 1111111111111011 
 		--inst <= "00010000000000101111111111111011";
 
 		--OP: bne $1, $2, 1111111111111011 
 		writeInst <= "00000000000000000000000000010000";--instrucao de endereco 16.
-		inst <= "00010100001000011111111111111011";
-		wait for 2 ns;
+		inst <= "00010100001000101111111111111011";
+		wait for 1 ns;
 
-		--OP: J  00000000000000000000000011
+		--OP: J  00000000000000000000000011 nao vai executar porque o BNE vai desviar.
 		writeInst <= "00000000000000000000000000010100";--instrucao de endereco 20.
 		inst <= "00001000000000000000000000000011";
-		wait for 2 ns;
+		wait for 1 ns; --14 ns.
 
+		reset <= '1';
+		wait for 2 ns;
 		reset <= '0';
 
+		clkPC <= '1';
 		clkPC <= '0';
+		wait for 2 ns;
+		
 		wait for 2 ns;
 		clkPC <= '1';
 		wait for 2 ns;
+		clkPC <= '0';
 
-		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
 		wait for 2 ns;
+		clkPC <= '0';
 
-		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
 		wait for 2 ns;
+		clkPC <= '0';
 
-		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
 		wait for 2 ns;
+		clkPC <= '0';
 
-		clkPC <= '0';
 		wait for 2 ns;
 		clkPC <= '1';
 		wait for 2 ns;
+		clkPC <= '0';
 
-		--Precisamos de um clock a mais para o funcionamento do Jump.
-		clkPC <= '0';
-		wait for 2 ns;
-		clkPC <= '1';
 		wait for 2 ns;
 	end process;
 end architecture;
