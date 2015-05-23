@@ -1,6 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_arith.all;
+use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 
 entity ALU is
@@ -28,7 +29,7 @@ begin
 		elsif( op = "110" )then
 			res <= a - b;
 		elsif( op = "111" )then
-			if( a < b )then
+			if( conv_integer(a) < conv_integer(b) )then
 				res <= "00000000000000000000000000000001";
 			else 
 				res <= "00000000000000000000000000000000";
