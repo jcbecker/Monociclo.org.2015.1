@@ -11,7 +11,7 @@ architecture MachineCode of TM_Mips_Fibonacci is
 	component MIPS is
 		port(
 			clkPC, reset: in std_logic;
-			writeInst, inst: in std_logic_vector( 31 downto 0 )
+			newInstAddress, newInst: in std_logic_vector( 31 downto 0 )
 		);
 	end component;
 
@@ -27,20 +27,19 @@ begin
 		wait for 2 ns;
 		reset <= '1';
 
+		--[00000000]  20080007  addi $8, $0, 7
+		--[00000004]  00004820  add $9, $0, $0  
+		--[00000008]  200a0001  addi $10, $0, 1
+		--[0000000c]  11000006  beq $8, $0, 24 [quebra-0x00000024] rótolo loop esta aqui [0000000c]
+		--[00000010]  012a5820  add $11, $9, $10 
+		--[00000014]  000a4820  add $9, $0, $10  
+		--[00000018]  000b5020  add $10, $0, $11
+		--[0000001c]  2108ffff  addi $8, $8, -1 
+		--[00000020]  08000003  j 0x000000003 [loop] 
+		--[00000024]  00000000  rotolo quebra esta aqui
+		--[00000028]  00000000  
+		--[0000002c]  00000000  verificar se o registrador 11 tem n-esimo fib
 
-
---[00000000]  20080007  addi $8, $0, 7
---[00000004]  00004820  add $9, $0, $0  
---[00000008]  200a0001  addi $10, $0, 1
---[0000000c]  11000006  beq $8, $0, 24 [quebra-0x00000024] rótolo loop esta aqui [0000000c]
---[00000010]  012a5820  add $11, $9, $10 
---[00000014]  000a4820  add $9, $0, $10  
---[00000018]  000b5020  add $10, $0, $11
---[0000001c]  2108ffff  addi $8, $8, -1 
---[00000020]  08000003  j 0x000000003 [loop] 
---[00000024]  00000000  rotolo quebra esta aqui
---[00000028]  00000000  
---[0000002c]  00000000  verificar se o registrador 11 tem n-esimo fib
 		clkPC <= '0';
 		--OP: addi $8, $0, 7
 		writeInst <= x"00000000";--instrucao de endereco 0.
@@ -103,8 +102,6 @@ begin
 		wait for 2 ns;
 
 		reset <= '0';
-
-
 
 		for i in 0 to 200 loop
 		
