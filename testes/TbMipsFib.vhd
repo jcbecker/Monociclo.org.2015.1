@@ -15,7 +15,7 @@ architecture MachineCode of TM_Mips_Fibonacci is
 		);
 	end component;
 
-	signal clkPC, TBSign, reset: std_logic;
+	signal clkPC, reset: std_logic;
 	signal writeInst, inst: std_logic_vector( 31 downto 0 );
 begin
 	Mips32bit: MIPS port map( clkPC, reset, writeInst, inst);
@@ -40,10 +40,9 @@ begin
 		--[00000028]  00000000  
 		--[0000002c]  00000000  verificar se o registrador 11 tem n-esimo fib
 
-		clkPC <= '0';
-		--OP: addi $8, $0, 7
+		--OP: addi $8, $0, 8
 		writeInst <= x"00000000";--instrucao de endereco 0.
-		inst <= x"20080007";
+		inst <= x"20080008";
 		wait for 2 ns;
 		
 		--OP: add $9, $0, $0 
@@ -72,44 +71,44 @@ begin
 		wait for 2 ns;
 
 		--OP: add $10, $0, $11
-		writeInst <= x"00000018";--instrucao de endereco ?.
+		writeInst <= x"00000018";--instrucao de endereco 24.
 		inst <= x"000b5020";
 		wait for 2 ns;
 
 		--OP: addi $8, $8, -1 
-		writeInst <= x"0000001c";--instrucao de endereco ?.
+		writeInst <= x"0000001c";--instrucao de endereco 28.
 		inst <= x"2108ffff";
 		wait for 2 ns;
 
 		--OP: j 0x000000003 [loop]
-		writeInst <= x"00000020";--instrucao de endereco ?.
+		writeInst <= x"00000020";--instrucao de endereco 32.
 		inst <= x"08000003";
 		wait for 2 ns;
 
 		--OP: rotolo quebra esta aqui
-		writeInst <= x"00000024";--instrucao de endereco ?.
+		writeInst <= x"00000024";--instrucao de endereco 36.
 		inst <= x"00000000";
 		wait for 2 ns;
 
 		--OP: ?
-		writeInst <= x"00000028";--instrucao de endereco ?.
+		writeInst <= x"00000028";--instrucao de endereco 40.
 		inst <= x"00000000";
 		wait for 2 ns;
 
 		--OP: ?
-		writeInst <= x"0000002c";--instrucao de endereco ?.
+		writeInst <= x"0000002c";--instrucao de endereco 44.
 		inst <= x"00000000";
 		wait for 2 ns;
 
 		reset <= '0';
 
+		wait for 1 ns;
 		for i in 0 to 200 loop
 		
 			clkPC <= '0';
 			wait for 2 ns;
 			clkPC <= '1';
 			wait for 2 ns;
-
 		end loop;
 
 		wait;
