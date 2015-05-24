@@ -122,6 +122,7 @@ begin
 		clkPC <= '0';
 
 		wait for 2 ns;
+		wait;
 	end process;
 end architecture;
 
