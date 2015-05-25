@@ -17,7 +17,7 @@ type Bytes is array( 255 downto 0 ) of std_logic_vector( 7 downto 0 );
 signal cell: Bytes;   
 
 begin
-process (MemRead,clk,address)
+process (clk)
 begin
     
     if( rising_edge(clk) and MemWrite = '1' )then
