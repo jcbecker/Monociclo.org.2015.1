@@ -40,6 +40,8 @@ begin
 		--[00000028]  00000000  
 		--[0000002c]  00000000  verificar se o registrador 11 tem n-esimo fib
 
+		--n-esimo termo da sequencia de fibonacci.
+		--deve ser colocado aqui no lugar do 8.
 		--OP: addi $8, $0, 8
 		writeInst <= x"00000000";--instrucao de endereco 0.
 		inst <= x"20080008";
