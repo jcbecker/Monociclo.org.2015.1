@@ -28,7 +28,7 @@ architecture Arch of MIPS is
 
 	component DataMemory is
 		port(
-			MemRead, MemWrite: in std_logic;
+			clk,MemRead, MemWrite: in std_logic;
 			address, writeData: in std_logic_vector( 31 downto 0 );
 			o: out std_logic_vector( 31 downto 0 )
 		);
@@ -172,7 +172,7 @@ begin
 	RB: RegisterBank port map( clkPC, RegWrite, RS, inst( 20 downto 16 ), RD, writeDataRB, A, B );
 	ChooseALU_EB: Mux32Bit port map( ALUSrc, B, offset32, eB ); 
 	ALUComp: ALU port map( OP, A, eB, zero, result );
-	DataMem: DataMemory port map( MemRead, MemWrite, result, B, dataFromMem );
+	DataMem: DataMemory port map( clkPC, MemRead, MemWrite, result, B, dataFromMem );
 	ChooseDataMemResul: Mux32Bit port map( MemToReg, result, dataFromMem, writeDataRB_BeforeJalTest );
  	PlusFour: Sum port map( pcOut, four, pcPlusFour );
 	ChooseWriteData: Mux32Bit port map( JAL, writeDataRB_BeforeJalTest, pcPlusFour, writeDataRB );

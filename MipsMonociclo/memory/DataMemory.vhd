@@ -26,7 +26,11 @@ begin
        cell( conv_integer( address )+2 ) <= writeData( 23 downto 16 );
        cell( conv_integer( address )+3 ) <= writeData( 31 downto 24 );
     end if;
+end process;
 
+process( MemRead )
+
+begin
     if( MemRead = '1' )then
        o( 7 downto 0 ) <= cell( conv_integer( address ) );
        o( 15 downto 8 ) <= cell( conv_integer( address )+1 );
